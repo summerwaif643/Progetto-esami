@@ -33,7 +33,8 @@
     <?php
     /* GENERAL TODO 
     Sanitizza tutti gli input 
-
+    Indicizzazione successo dopo submit inizialoe
+    
     */
 
     require 'Database.php' ;
@@ -48,11 +49,34 @@
     }
     
     if(isset($_POST['invia']) === TRUE){
-
+        //Gestione attributi cliente
         $nome = $_POST['nome'];
         $cognome = $_POST['cognome'];
         $indirizzo = $_POST['indirizzo'];
         $recapito = $_POST['recapito'];
+
+        //Gestione contratto
+        $offerta = $_POST['offerte'];
+        switch($offerta){
+            case 'adsl':
+                $tipologia = "ADSL";
+                $prezzo = 20.90;
+                $apparecchiatura = "Fritz!Box 7272";
+                break;
+
+            case 'fttc':
+                $tipologia = "FTTC";
+                $prezzo = 29.99;
+                $apparecchiatura = "Fritz!Box 7430";
+                break;
+                
+            case 'ftth':
+                $tipologia = "FTTH";
+                $prezzo = 500;
+                $apparecchiatura = "Fritz!Box 7590";
+                break;
+        }
+
         
         $inserimentoCliente = "INSERT INTO Clienti (Nome, Cognome, Indirizzo, Recapito)
                                 VALUES ('$nome', '$cognome', '$indirizzo', '$recapito');

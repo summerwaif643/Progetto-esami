@@ -19,9 +19,28 @@ class Database{
  
     public function insertQuery($queryString){
         if($this->connect()->query($queryString)){
-            return 'Success!';
+            return TRUE;
         }
-            else return 'Fallimento!';
+            else return FALSE;
+    }
+
+    public function login($username, $password){
+        $mysql = $this->connect();
+        //hasha la password
+
+        $loginQuery = "SELECT *
+                        FROM Login_Operatore
+                        WHERE Login = '$username' AND
+                                Password = '$password';
+        ";
+
+        $result = $mysql->query($loginQuery);
+
+        if($result->num_rows > 0){
+            $_SESSION['username'] = $username;
+            return header();
+        } else return header('location: index.php');
+
     }
 
     private function connect(){
@@ -30,7 +49,10 @@ class Database{
         $this->databasePassword = ''; 
         $this->databaseUsername = 'root';
 
-        $connection = new mysqli($this->databaseHostname, $this->databaseUsername, $this->databasePassword, $this->databaseName);
+        $connection = new mysqli($this->databaseHostname, 
+                                    $this->databaseUsername, 
+                                    $this->databasePassword, 
+                                    $this->databaseName);
         return $connection;
     }
 
@@ -39,6 +61,5 @@ class Database{
     }
 
 }
-
 
 ?>

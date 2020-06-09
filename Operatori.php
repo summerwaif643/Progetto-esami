@@ -11,15 +11,17 @@
 
 <?php
 
-$username = $_POST["username"];
-$password = $_POST["password"];
+require 'Database.php';
+
+$mysql = new Database();
 
 if(isset($_POST['accedi'])){
+    $username = $_POST["username"];
+    $password = $_POST["password"];
+
+    $mysql->login($username, $password);
     
 }
-
-
-
 
 
 ?>
