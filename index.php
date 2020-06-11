@@ -50,40 +50,69 @@
     
     if(isset($_POST['invia']) === TRUE){
         //Gestione attributi cliente
+        $mysql = new Database();
+        $date = new DateTime();
+
         $nome = $_POST['nome'];
         $cognome = $_POST['cognome'];
         $indirizzo = $_POST['indirizzo'];
         $recapito = $_POST['recapito'];
 
         //Gestione contratto
-        $offerta = $_POST['offerte'];
+        $offerta = $_POST['offerta'];
         switch($offerta){
             case 'adsl':
                 $tipologia = "ADSL";
                 $prezzo = 20.90;
                 $apparecchiatura = "Fritz!Box 7272";
+                $idApparecchiatura = 1;
+                $idOperatore = 1;
+                $idLogin = 1;
                 break;
 
             case 'fttc':
                 $tipologia = "FTTC";
                 $prezzo = 29.99;
                 $apparecchiatura = "Fritz!Box 7430";
+                $idApparecchiatura = 3;
+                $idOperatore = 2;
+                $idLogin = 2;
                 break;
                 
             case 'ftth':
                 $tipologia = "FTTH";
                 $prezzo = 500;
                 $apparecchiatura = "Fritz!Box 7590";
+                $idApparecchiatura = 6;
+                $idOperatore = 3;
+                $idLogin = 3;
                 break;
         }
-
         
         $inserimentoCliente = "INSERT INTO Clienti (Nome, Cognome, Indirizzo, Recapito)
                                 VALUES ('$nome', '$cognome', '$indirizzo', '$recapito');
         ";  
-        
-        $mysql = new Database();
+
         $mysql->insertQuery($inserimentoCliente);
+        $lastId = $mysql->lastId();
+
+        $inserimentoContratto = "INSERT INTO Contratti (PrezzoMensile,
+                                                        Tipologia,
+                                                        DataInizio,
+                                                        Apparecchiature_idApparecchiature,
+                                                        Operatori_idOperatori,
+                                                        Operatori_Login_Operatori_idLogin,
+                                                        Clienti_idClienti)
+                                                VALUES  ('$prezzo',
+                                                        '$tipologia',
+                                                        '$date->getTimestamp()',
+                                                        '$idApparecchiatura',
+                                                        '$idOperatore',
+                                                        '$idLogin',
+                                                        '$lastId'
+                                                        );";
+        
+        $mysql->insertQuery($inserimentoContratto);
         
     }
     

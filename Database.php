@@ -24,6 +24,20 @@ class Database{
             else return FALSE;
     }
 
+    public function lastId(){
+        $mysql = $this->connect();
+        $lastIdQuery = "SELECT MAX(idClienti) FROM Clienti";
+        
+        $result = $mysql->query($lastIdQuery);
+
+        if($result->num_rows > 0){
+            while($row = $result->fetch_assoc()){
+                    $id = $row["MAX(idClienti)"];                
+            }
+            return $id;
+        }   else return FALSE;
+    }
+
     public function login($username, $password){
         $mysql = $this->connect();
         //hasha la password
@@ -38,12 +52,15 @@ class Database{
 
         if($result->num_rows > 0){
             $_SESSION['username'] = $username;
-            return header();
-        } else return header('location: index.php');
+            return header('location: visualizzazioneContratti.php');
+        } else {
+            //error page
+            return header('location: index.php');
+        } 
 
     }
 
-    private function connect(){
+    public function connect(){
         $this->databaseHostname = "localhost";
         $this->databaseName = 'isp';
         $this->databasePassword = ''; 
