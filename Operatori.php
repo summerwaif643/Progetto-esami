@@ -12,6 +12,7 @@
 <?php
 
 require 'Database.php';
+session_start();
 
 $mysql = new Database();
 
@@ -19,8 +20,10 @@ if(isset($_POST['accedi'])){
     $username = $_POST["username"];
     $password = $_POST["password"];
 
-    $mysql->login($username, $password);
-    
+    if($mysql->login($username, $password) != "error"){
+        $_SESSION['username'] = $username;
+        return header('location: visualizzazioneContratti.php');
+    } else echo "Username o password sono errati. ";
 }
 
 

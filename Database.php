@@ -43,7 +43,7 @@ class Database{
         //hasha la password
 
         $loginQuery = "SELECT *
-                        FROM Login_Operatore
+                        FROM Login_Operatori
                         WHERE Login = '$username' AND
                                 Password = '$password';
         ";
@@ -51,11 +51,10 @@ class Database{
         $result = $mysql->query($loginQuery);
 
         if($result->num_rows > 0){
-            $_SESSION['username'] = $username;
-            return header('location: visualizzazioneContratti.php');
+           return "success";
         } else {
             //error page
-            return header('location: index.php');
+            return "error";
         } 
 
     }

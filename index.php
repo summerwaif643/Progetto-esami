@@ -47,6 +47,8 @@
         }
         echo $js_code;
     }
+
+    session_start();
     
     if(isset($_POST['invia']) === TRUE){
         //Gestione attributi cliente
@@ -95,6 +97,7 @@
 
         $mysql->insertQuery($inserimentoCliente);
         $lastId = $mysql->lastId();
+        $time = var_dump($date->getTimestamp());
 
         $inserimentoContratto = "INSERT INTO Contratti (PrezzoMensile,
                                                         Tipologia,
@@ -105,7 +108,7 @@
                                                         Clienti_idClienti)
                                                 VALUES  ('$prezzo',
                                                         '$tipologia',
-                                                        '$date->getTimestamp()',
+                                                        '$time',
                                                         '$idApparecchiatura',
                                                         '$idOperatore',
                                                         '$idLogin',
