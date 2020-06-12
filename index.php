@@ -69,7 +69,7 @@
                 $apparecchiatura = "Fritz!Box 7272";
                 $idApparecchiatura = 1;
                 $idOperatore = 1;
-                $idLogin = 1;
+                $idLogin = "ppanozzo@gmail.com";
                 break;
 
             case 'fttc':
@@ -78,7 +78,7 @@
                 $apparecchiatura = "Fritz!Box 7430";
                 $idApparecchiatura = 3;
                 $idOperatore = 2;
-                $idLogin = 2;
+                $idLogin = "vsepe@gmail.com";
                 break;
                 
             case 'ftth':
@@ -87,7 +87,7 @@
                 $apparecchiatura = "Fritz!Box 7590";
                 $idApparecchiatura = 6;
                 $idOperatore = 3;
-                $idLogin = 3;
+                $idLogin = "dditrocchio@gmail.com";
                 break;
         }
         
@@ -104,7 +104,7 @@
                                                         DataInizio,
                                                         Apparecchiature_idApparecchiature,
                                                         Operatori_idOperatori,
-                                                        Operatori_Login_Operatori_idLogin,
+                                                        Operatori_Login_Operatori_Login,
                                                         Clienti_idClienti)
                                                 VALUES  ('$prezzo',
                                                         '$tipologia',

@@ -40,8 +40,8 @@ class Database{
 
     public function login($username, $password){
         $mysql = $this->connect();
-        //hasha la password
 
+        //hasha la password
         $loginQuery = "SELECT *
                         FROM Login_Operatori
                         WHERE Login = '$username' AND

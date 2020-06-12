@@ -1,15 +1,15 @@
 <html>
 
-<body>
-<form action="<?php $_SERVER['PHP_SELF'];?>" method= "POST">
+<title> Dati Clienti</title>
 
-    <button type="submit" value="salva"> Salva dati </button>
+    <body>
+        <a href="/Progetto-esami/saveData.php"> Salva i dati dei clienti </a>
+        <br>
+        <a href="/Progetto-esami/viewSuppliers.php"> Controlla gli apparati </a>
+        <br>
+        <br>
 
-</form>
 
-</body>
-
-</html>
 <?php
 
 function console_log($output, $with_script_tags = true) {
@@ -24,18 +24,17 @@ function console_log($output, $with_script_tags = true) {
     session_start();
 
     $mysql = new Database();
-    $mysql = $mysql->connect();
 
     $sessionUsername = $_SESSION['username'];
     console_log($sessionUsername . "quaaa");
 
-    $selectQuery = "SELECT (Nome, Cognome, Indirizzo, Recapito,
-                            PrezzoMensile, Tipologia, DataInizio)
-                    FROM    Clienti FULL JOIN Contratti ON idClienti = idContratti
-                    WHERE   Operatori_Login_Operatori_idLogin = '$sessionUsername';
+    $selectQuery = "SELECT idClienti, Nome, Cognome, Indirizzo, Recapito,
+                            Contratti.idContratti, Contratti.PrezzoMensile, Contratti.Tipologia, Contratti.DataInizio 
+                    FROM    Clienti FULL JOIN Contratti ON idClienti = Clienti_idClienti
+                    WHERE   Operatori_Login_Operatori_Login = '$sessionUsername';
                     ";
 
-    $result = $mysql->query($selectQuery);
+    $result = $mysql->connect()->query($selectQuery);
     if($result->num_rows > 0){
         while($row = $result->fetch_assoc()){
             echo 'Nome: '. $row['Nome'] . '<br>' .
@@ -44,9 +43,16 @@ function console_log($output, $with_script_tags = true) {
                     'Recapito: ' . $row['Recapito'] . '<br>' .
                     'PrezzoMensile: ' . $row['PrezzoMensile'] . '<br>' . 
                     'Tipologia: ' . $row['Tipologia'] . '<br>' .
-                    'DataInizio: ' . $row['DataInizio'] . '<br>';
+                    'DataInizio: ' . $row['DataInizio'] . '<br>' .
+                    "<a href='/Progetto-esami/delete.php?idClienti=" . $row['idClienti'] . '&idContratti=' . $row['idContratti'] . "'" . "> Elimina Utente. </a>" .
+                    '<br>' . 
+                    '<br>'
+                    ;
+                   
             
         }
     }
 
-?>
+?>    
+    </body>
+        </html>
