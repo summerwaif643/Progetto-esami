@@ -11,6 +11,7 @@
     $mysql = new Database();
     $sessionUsername = $_SESSION['username'];
 
+    //query per uso tipologia (innestata)
     $tipologiaQuery = "SELECT Tipologia
                         FROM Contratti 
                         WHERE Operatori_Login_Operatori_Login = '$sessionUsername';";
@@ -22,6 +23,7 @@
         }
     }
 
+    //query effettiva con uso della precedente query 
     $fornituraQuery = "SELECT NomeApparato, Prezzo, TipoApparecchiatura, NomeAzienda
                         FROM Apparecchiature JOIN Fornitori on idFornitore = Fornitori_idFornitore
                         WHERE TipoApparecchiatura = '$tipo';"

@@ -8,15 +8,18 @@ class Database{
 
     public $errorName;
 
-    function console_log($output, $with_script_tags = true) {
-        $js_code = 'console.log(' . json_encode($output, JSON_HEX_TAG) . 
-    ');';
-        if ($with_script_tags) {
-            $js_code = '<script>' . $js_code . '</script>';
-        }
-        echo $js_code;
-    }
- 
+    /*
+    Classe per la gestione alla connessione del database. 
+    Esiste per due motivi;
+        Aprire una connessione ogni qualvolta che c'e' n'e' bisogno
+        in modo da non tenere una connessione aperta per tutta la 
+        durata della sessione
+        e
+        Creare piu' astrattismo possibile. 
+
+    */
+
+    //inserimento della query basato su stringa 
     public function insertQuery($queryString){
         if($this->connect()->query($queryString)){
             return TRUE;
@@ -24,6 +27,7 @@ class Database{
             else return FALSE;
     }
 
+    //Select sull'ultimo ID AUTOINCREMENT nella tabella clienti per chiavi esterne
     public function lastId(){
         $mysql = $this->connect();
         $lastIdQuery = "SELECT MAX(idClienti) FROM Clienti";
@@ -39,7 +43,9 @@ class Database{
     }
 
     public function login($username, $password){
+        //
         $mysql = $this->connect();
+        $password = password_hash($password, PASSWORD_DEFAULT);
 
         //hasha la password
         $loginQuery = "SELECT *
@@ -60,6 +66,7 @@ class Database{
     }
 
     public function connect(){
+        //funzione di connessione al database. 
         $this->databaseHostname = "localhost";
         $this->databaseName = 'isp';
         $this->databasePassword = ''; 
@@ -70,10 +77,6 @@ class Database{
                                     $this->databasePassword, 
                                     $this->databaseName);
         return $connection;
-    }
-
-    function __construct(){
-        
     }
 
 }

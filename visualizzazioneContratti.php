@@ -12,28 +12,23 @@
 
 <?php
 
-function console_log($output, $with_script_tags = true) {
-    $js_code = 'console.log(' . json_encode($output, JSON_HEX_TAG) . ');';
-    if ($with_script_tags) {
-        $js_code = '<script>' . $js_code . '</script>';
-    }
-    echo $js_code;
-}
-
     require 'Database.php';
     session_start();
 
+    //classe per connessione al database
     $mysql = new Database();
 
+    //recupero dell'username 
     $sessionUsername = $_SESSION['username'];
-    console_log($sessionUsername . "quaaa");
 
+    //query in base all'operatore connesso
     $selectQuery = "SELECT idClienti, Nome, Cognome, Indirizzo, Recapito,
                             Contratti.idContratti, Contratti.PrezzoMensile, Contratti.Tipologia, Contratti.DataInizio 
                     FROM    Clienti FULL JOIN Contratti ON idClienti = Clienti_idClienti
                     WHERE   Operatori_Login_Operatori_Login = '$sessionUsername';
                     ";
 
+    //formazione della pagina con i dati presi dalla query 
     $result = $mysql->connect()->query($selectQuery);
     if($result->num_rows > 0){
         while($row = $result->fetch_assoc()){

@@ -31,27 +31,13 @@
     </form>
 
     <?php
-    /* GENERAL TODO 
-    Sanitizza tutti gli input 
-    Indicizzazione successo dopo submit inizialoe
-    
-    */
-
     require 'Database.php' ;
-
-    function console_log($output, $with_script_tags = true) {
-        $js_code = 'console.log(' . json_encode($output, JSON_HEX_TAG) . 
-    ');';
-        if ($with_script_tags) {
-            $js_code = '<script>' . $js_code . '</script>';
-        }
-        echo $js_code;
-    }
 
     session_start();
     
     if(isset($_POST['invia']) === TRUE){
         //Gestione attributi cliente
+        //classe per connessione al database
         $mysql = new Database();
         $date = new DateTime();
 
@@ -60,8 +46,15 @@
         $indirizzo = $_POST['indirizzo'];
         $recapito = $_POST['recapito'];
 
+        //sanitizzazione input
+        $nome = preg_replace('/[^A-Za-z0-9 ]/', '', $nome);
+        $cognome = preg_replace('/[^A-Za-z0-9 ]/', '', $cognome);
+        $indirizzo = preg_replace('/[^A-Za-z0-9 ]/', '', $indirizzo);
+        $recapito = preg_replace('/[^A-Za-z0-9 ]/', '', $recapito);
+
         //Gestione contratto
         $offerta = $_POST['offerta'];
+        //assegnazione operatori ed apparecchiatura per la tabella contratti
         switch($offerta){
             case 'adsl':
                 $tipologia = "ADSL";
@@ -91,14 +84,17 @@
                 break;
         }
         
+        //query per inserimento dei dati cliente
         $inserimentoCliente = "INSERT INTO Clienti (Nome, Cognome, Indirizzo, Recapito)
                                 VALUES ('$nome', '$cognome', '$indirizzo', '$recapito');
         ";  
 
         $mysql->insertQuery($inserimentoCliente);
+        
+        //funzione per combaciamento chiave esterna (vedere Database.php)
         $lastId = $mysql->lastId();
-        $time = var_dump($date->getTimestamp());
 
+        //query per inserimento contratto
         $inserimentoContratto = "INSERT INTO Contratti (PrezzoMensile,
                                                         Tipologia,
                                                         DataInizio,
