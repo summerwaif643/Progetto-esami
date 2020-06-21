@@ -160,9 +160,9 @@ COMMIT;
 -- -----------------------------------------------------
 START TRANSACTION;
 USE `ISP`;
-INSERT INTO `ISP`.`Login_Operatori` (`Login`, `Password`) VALUES ('ppanozzo@gmail.com', '123456');
-INSERT INTO `ISP`.`Login_Operatori` (`Login`, `Password`) VALUES ('vsepe@gmail.com', '456789');
-INSERT INTO `ISP`.`Login_Operatori` (`Login`, `Password`) VALUES ('dditrocchio@gmail.com', '456789');
+INSERT INTO `ISP`.`Login_Operatori` (`Login`, `Password`) VALUES ('ppanozzo@gmail.com', '$2y$10$1EW5JB1LljbxCKQ5xe9OpeHA9S3FVRVphrruOqI7SM5/aXUsQS/7C');
+INSERT INTO `ISP`.`Login_Operatori` (`Login`, `Password`) VALUES ('vsepe@gmail.com', '$2y$10$1EW5JB1LljbxCKQ5xe9OpeHA9S3FVRVphrruOqI7SM5/aXUsQS/7C');
+INSERT INTO `ISP`.`Login_Operatori` (`Login`, `Password`) VALUES ('dditrocchio@gmail.com', '$2y$10$1EW5JB1LljbxCKQ5xe9OpeHA9S3FVRVphrruOqI7SM5/aXUsQS/7C');
 
 COMMIT;
 

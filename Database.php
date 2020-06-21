@@ -45,24 +45,27 @@ class Database{
     public function login($username, $password){
         //
         $mysql = $this->connect();
-        $password = password_hash($password, PASSWORD_DEFAULT);
+        $hashPassword = password_hash($password, PASSWORD_DEFAULT);
 
-        //hasha la password
-        $loginQuery = "SELECT *
+        if(password_verify($password, $hashPassword)){
+            $loginQuery = "SELECT *
                         FROM Login_Operatori
-                        WHERE Login = '$username' AND
-                                Password = '$password';
+                        WHERE Login = '$username';
         ";
-
+        echo 'password verificata\n';
+        echo $username;
         $result = $mysql->query($loginQuery);
 
-        if($result->num_rows > 0){
-           return "success";
-        } else {
-            //error page
-            return "error";
-        } 
+            if($result->num_rows > 0){
+                echo "LINEEEEEEEEEEEE";
+                return "success";
+                } else {
+                    //error page
+                    return "error";
+                 } 
 
+            }
+        
     }
 
     public function connect(){

@@ -21,7 +21,6 @@ if(isset($_POST['accedi'])){
     $username = $_POST["username"];
     $password = $_POST["password"];
 
-    $username = preg_replace('/[^A-Za-z0-9 ]/', '', $username);
     $password = preg_replace('/[^A-Za-z0-9 ]/', '', $password);
 
     if($mysql->login($username, $password) != "error"){

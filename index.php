@@ -10,7 +10,7 @@
         <br>
         indirizzo: <input type="text" name="indirizzo" required>
         <br>
-        Recapito: <input type="number" name="recapito" required>
+        Recapito: <input type="tel" name="recapito" required>
         <br>
         Tipo contratto:
         <br>
